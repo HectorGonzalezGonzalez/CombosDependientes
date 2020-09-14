@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bdTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Subtema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Tema_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Subtema_Tema">
+          <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
+          <End Role="Subtema" Type="Self.Subtema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tema">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subtema">
+              <PropertyRef Name="Tema_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdTestModelStoreContainer">
+          <EntitySet Name="Subtema" EntityType="Self.Subtema" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tema" EntityType="Self.Tema" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Subtema_Tema" Association="Self.FK_Subtema_Tema">
+            <End Role="Tema" EntitySet="Tema" />
+            <End Role="Subtema" EntitySet="Subtema" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bdTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Subtema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tema_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tema" Relationship="Self.FK_Subtema_Tema" FromRole="Subtema" ToRole="Tema" />
+        </EntityType>
+        <EntityType Name="Tema">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Subtema" Relationship="Self.FK_Subtema_Tema" FromRole="Tema" ToRole="Subtema" />
+        </EntityType>
+        <Association Name="FK_Subtema_Tema">
+          <End Role="Tema" Type="Self.Tema" Multiplicity="1" />
+          <End Role="Subtema" Type="Self.Subtema" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tema">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subtema">
+              <PropertyRef Name="Tema_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bdTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Subtema" EntityType="Self.Subtema" />
+          <EntitySet Name="Tema" EntityType="Self.Tema" />
+          <AssociationSet Name="FK_Subtema_Tema" Association="Self.FK_Subtema_Tema">
+            <End Role="Tema" EntitySet="Tema" />
+            <End Role="Subtema" EntitySet="Subtema" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bdTestModelStoreContainer" CdmEntityContainer="bdTestEntities">
+          <EntitySetMapping Name="Subtema">
+            <EntityTypeMapping TypeName="bdTestModel.Subtema">
+              <MappingFragment StoreEntitySet="Subtema">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Tema_id" ColumnName="Tema_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tema">
+            <EntityTypeMapping TypeName="bdTestModel.Tema">
+              <MappingFragment StoreEntitySet="Tema">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

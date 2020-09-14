@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Index</h2>
+
+@Html.DropDownList("DDLtema",null, new {@class="form-control"})
+
+<select id="DDLSubtema" class="form-control"></select>
+
+<script>
+    var DDLtema = document.getElementById("DDLtema");
+    DDLtema.addEventListener("change", LoadSubtema);
+    LoadSubtema();
+    function LoadSubtema() {
+        var url = "@Url.Content("~/Tema/ListarSubtema?TemaId=")" + DDLtema.value;        
+        fetch(url)
+            .then(function (result) {
+                if (result.ok)//Cuando la respuesta es correcta
+                {
+                    return result.json();//Convertimos la respuesta en Json
+                }
+            })
+            .then(function (data) {
+                var DDLSubtema = document.getElementById("DDLSubtema");
+                DDLSubtema.innerHTML = "";//Limmpiamos el combo para que no se agreguen mas elemntos existentes
+                data.forEach(function (element) {
+                    var opt = document.createElement("option");
+                    opt.appendChild(document.createTextNode(element.Text));
+                    opt.value = element.value;
+                    DDLSubtema.appendChild(opt);
+                });
+
+            });
+    }
+</script>
